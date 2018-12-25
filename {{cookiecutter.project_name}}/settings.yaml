@@ -1,0 +1,10 @@
+default:
+  DEBUG: false {% if cookiecutter.use_celery == 'yes' %}
+  CELERY_IMPORTS: "{{cookiecutter.app_name}}.tasks"
+  CELERY_BROKER_URL: "redis://redis:6379/0"
+  CELERY_RESULT_BACKEND: "redis://redis:6379/0"{% endif %}
+development:
+  DEBUG: true
+testing:
+  DEBUG: true
+  

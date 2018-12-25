@@ -1,0 +1,6 @@
+{
+    "project_name": "example-api",
+    "project_description": "Example REST API.",
+    "app_name": "example_api",
+    "use_celery": ["yes", "no"]
+}

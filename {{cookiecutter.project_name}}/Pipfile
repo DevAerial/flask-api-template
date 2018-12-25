@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+name = "pypi"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+yapf = "*"
+rope = "*"
+pytest = "*"
+
+[requires]
+python_version = "3.6"
+
+[packages]
+dynaconf = {version = "*",extras = ["yaml"]}
+gunicorn = "*"
+flask-restplus = "*"
+flask-jwt-extended = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
+marshmallow = "*"{% if cookiecutter.use_celery == 'yes'%}
+celery = {version = "*",extras = ["redis"]}{% endif %}
