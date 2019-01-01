@@ -1,10 +1,10 @@
 from flask_restplus import Namespace, Resource
 
-api = Namespace(
+ping_namespace = Namespace(
     'ping', description='Ping endpoint for checking service availability.')
 
 
-@api.route('/ping')
+@ping_namespace.route('')
 class PingAPI(Resource):
     '''
     Ping endpoint.

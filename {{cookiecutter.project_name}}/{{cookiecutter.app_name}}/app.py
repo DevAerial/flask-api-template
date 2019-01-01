@@ -1,6 +1,7 @@
 from celery import Celery
 from dynaconf import FlaskDynaconf
 from flask import Flask
+from werkzeug.debug import DebuggedApplication
 
 from {{cookiecutter.app_name}} import api, extensions
 from {{cookiecutter.app_name}}.celery import init_celery 
@@ -11,6 +12,8 @@ def configure_app(app):
     Configure app settings.
     '''
     FlaskDynaconf(app)
+    if app.debug:
+        app.wsgi_app = DebuggedApplication(app.wsgi_app, evalex=True)
 
 
 def init_extensions(app):
@@ -31,11 +34,10 @@ def init_celery(app=None):
     '''
     Initialize Celery instance
     '''
-    if app:
-        extensions.celery.conf.update(app.config)
-    else:
-        extensions.celery.conf.broker_url = settings['CELERY_BROKER_URL']
-        extensions.celery.conf.result_backend = settings['CELERY_RESULT_BACKEND']
+    app = app or create_app()
+    extensions.celery.conf.broker_url = app.config['CELERY_BROKER_URL']
+    extensions.celery.conf.result_backend = app.config['CELERY_RESULT_BACKEND']
+    extensions.celery.conf.update(app.config)
 
     class ContextTask(celery.Task):
         abstract = True
